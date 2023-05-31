@@ -1,0 +1,9 @@
+::
+??Which choice accurately summarizes the text.
+[texts/short_story1.txt]
+__
+!The authour writes about their favorite food
+*Our protagonist finds her husband in a mall
+!Liz invites a freind over for dinner
+!The narrator has a nice day in the park
+;;

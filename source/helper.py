@@ -10,8 +10,8 @@ try:
   import random
   from sys import platform
   from cryptography.fernet import Fernet
-except ModuleNotFoundError:
-  print('ERROR: [PACKAGES] An unknown package could not be imported.')
+except Exception as e:
+  print(f'ERROR: An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
   
 
