@@ -19,50 +19,61 @@ class set:
     
     with open(file, 'r') as f:
       content = f.read()
+    fcontent = content.splitlines()
     alphabet = string.ascii_uppercase
+
+    questions = []
+
     answer_choice_count = -1
     incorrect_answers = []
     correct_answers = []
     allAnswers = []
-    ticker = -1
     
     parsed_answers = []
+    parsed_questions = []
     
     # This is a good start but it doesnt conslidate and parse question by question which it needs to 
     # in order to prevent overlaping answer choices and stuff.
     for Qline in content.splitlines():
+      # fcontent: The contents of the file split by newlines
       if '::' in Qline:
-        qStart = content.find(Qline)
+        qStart = fcontent.index(Qline)
       if ';;' in Qline:
-        qEnd = content.find(Qline)
+        qEnd = fcontent.index(Qline)
+        questionOBJ = fcontent[qStart:qEnd]
+        questions.append(questionOBJ)
     
-    for line in content[qStart:qEnd].splitlines():
-      if '??' in line:
-        questionIndex = line.find('??')
-        question = line[questionIndex:]
-      if '__' in line:
-        aStart = content.find(line)
-      if '[' and ']' in line:
-        if '[' in line:
-          embedStart = line.find('[')
-        if ']' in line:
-          embedEnd = line.find(']')
-        embedded_file = line[embedStart:embedEnd].replace('[', '').replace(']', '')
+    for item in questions: # For every question in the list
+      ticker = -1 # Reset the ticker so the letters start from A
+      for line in item: # For each newline in the choosen item
+        # Index: Returns the index of the item in a given list
+        # Find: Returns index of the word in a string/line
+        if '??' in line:
+          questionIndex = line.find('??')
+          question = line[questionIndex:]
+        if '__' in line:
+          aStart = item.index(line)
+        if '[' and ']' in line:
+          if '[' in line:
+            embedStart = line.find('[')
+          if ']' in line:
+            embedEnd = line.find(']')
+          embedded_file = line[embedStart:embedEnd].replace('[', '').replace(']', '')
     
-    for line in content[qStart:qEnd].splitlines():
-      if '!' in line:
-        incorrect_answers.append(line.replace('!', ''))
-        allAnswers.append(line.replace('!', ''))
-      elif '*' in line:
-        correct_answers.append(line.replace('*', ''))
-        allAnswers.append(line.replace('*', ''))
-      answer_choice_count += 1
+      for Aline in item[aStart:]: # For every line after the __ symbol
+        if '!' in Aline:
+          incorrect_answers.append(Aline.replace('!', ''))
+          allAnswers.append(Aline.replace('!', ''))
+        elif '*' in Aline:
+          correct_answers.append(Aline.replace('*', ''))
+          allAnswers.append(Aline.replace('*', ''))
+        answer_choice_count += 1
       
-    for item in allAnswers:
-      ticker += 1
-      letter = list(alphabet)[ticker]
-      answer_choice = f'{letter}. {item}'
-      parsed_answers.append(answer_choice)
+      for ans in allAnswers: # Assign a uppercase letter to each choice
+        ticker += 1
+        letter = list(alphabet)[ticker]
+        answer_choice = f'{letter}. {ans}'
+        parsed_answers.append(answer_choice)
     
     #if '[' and ']' in content[qStart:questionIndex]:
     #  print('yea')
