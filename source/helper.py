@@ -8,7 +8,7 @@ try:
   import time
   import string
   import random
-  from cryptography.fernet import Fernet
+  import base64
 except Exception as e:
   print(f'ERROR: [HELPER] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
@@ -215,40 +215,34 @@ class functions:
 
 class crypto:
 
-  def encrypt(file):
-    # Encrypt the given file and return a key
+  def encode(file):
+    # Encode the given file
     if not os.path.exists(file):
       print(f'ERROR: Could not find {file}.')
       sys.exit(1)
-
-    key = Fernet.generate_key()
-    fernet = Fernet(key)
 
     with open(file, 'rb') as Fin:
       original = Fin.read()
-      Fin.close()
-    encrypted = fernet.encrypt(original)
-
+      Fin.close()  
+    bytes = base64.b64encode(original)
+  
     with open(file, 'wb') as Fout:
-      Fout.write(encrypted)
+      Fout.write(bytes)
       Fout.close()
-    return key
 
-  def decrypt(file, key):
-    # Decrypt an encrypted file with a key
+  def decode(file):
+    # Decode the given file
     if not os.path.exists(file):
       print(f'ERROR: Could not find {file}.')
       sys.exit(1)
 
-    fernet = Fernet(key)
-
     with open(file, 'rb') as Fin:
-      encrypted = Fin.read()
-      Fin.close()
-    decrypted = fernet.decrypt(encrypted)
-
+      original = Fin.read()
+      Fin.close()  
+    bytes = base64.b64decode(original)
+  
     with open(file, 'wb') as Fout:
-      Fout.write(decrypted)
+      Fout.write(bytes)
       Fout.close()
 
 
