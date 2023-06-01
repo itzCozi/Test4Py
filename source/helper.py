@@ -260,16 +260,3 @@ if __name__ == '__main__': # Sorry this looks ugly (looks like JS TBH)
   \nEXAMPLE: from {file_name} import functions as lib \
   \n------------------------------------------------------\n")
   sys.exit(1)
-  
-if 'linux' in sys.platform:
-  print(f"\n------------------------------------------------ \
-  \nTHIS PROGRAM IS ONLY COMPATIBLE WITH WINDOWS. \
-  \nSOME ISSUES MAY BE ENCOUNTERED, CONTINUE? \
-  \n------------------------------------------------")
-  user_input = input('(y/n)> ')
-  if 'y' in user_input.lower():
-    print('\nYIELDING...')
-    sys.platform = 'yielded'
-  if 'n' in user_input.lower():
-    print('\nQUITTING...')
-    sys.exit(1)

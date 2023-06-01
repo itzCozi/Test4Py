@@ -21,6 +21,14 @@ class files:
 
 
 def prerun():
+  if 'linux' in sys.platform:
+    print(f"\n------------------------------------------------ \
+    \nTHIS PROGRAM IS ONLY COMPATIBLE WITH WINDOWS. \
+    \nSOME ISSUES MAY BE ENCOUNTERED, QUITTING... \
+    \n------------------------------------------------")
+    input('Enter to exit...')
+    sys.exit(1)
+  
   if not os.path.exists(files.base_dir):
     os.mkdir(files.base_dir)
   if not os.path.exists(files.set_file):
