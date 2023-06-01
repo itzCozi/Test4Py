@@ -14,11 +14,9 @@ def prerun():
   if not os.path.exists(files.base_dir):
     os.mkdir(files.base_dir)
   if not os.path.exists(files.set_file):
-    open(files.set_file, 'x')
+    open(files.set_file, 'w')
   if not os.path.exists(files.log_file):
-    open(files.log_file, 'x')
+    open(files.log_file, 'w')
   if not os.path.exists(files.sesh_file):
-    open(files.sesh_file, 'x')
-  else:
-    with open(files.log_file, 'a') as log:
-      log.write('Passed [CHECKS] successfully.')
+    open(files.sesh_file, 'w')
+  
