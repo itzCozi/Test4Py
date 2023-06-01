@@ -3,6 +3,8 @@
 try:
   import os, sys
   import tkinter as tk
+  from parser import createSet  # Convert file to parsed set [createSet(file)]
+  from helper import crypto     # Decoding&Encoding the set [decode(file),encode(file)]
 except Exception as e:
   print(f'ERROR: [GUI] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
@@ -70,8 +72,20 @@ def error_page():
   tk.mainloop()
 
 def new_session():
+  # Takes in a set file and encodes it from bytes to string
+  # GETTING-SET-PATH: https://www.geeksforgeeks.org/how-to-get-the-input-from-tkinter-text-box/#
   pass
+
 def join_session():
+  # Decodes given string to bytes and write to set file/Start test
+  pass
+
+def test_loop(set):
+  # Takes in question set and parses the question, embeds and answer choices with each 
+  # answer choice printed as a button for each item in the last item of the question list
+  """ EXAMPLE QUESTION LIST
+  [['Which choice accurately summarizes the text. ', 'THIS IS AN EMBEDDED \nFILE WITH TWO LINES ', ['A. The authour writes about their favorite food', 'B. *Our protagonist finds her husband in a mall', 'C. Liz invites a freind over for dinner', 'D. The narrator has a nice day in the park']]]
+  """
   pass
 
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)

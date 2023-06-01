@@ -10,3 +10,24 @@ try:
 except Exception as e:
   print(f'ERROR: [MAIN] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
+  
+
+class files:
+  base_dir = f'C:/Users/{os.getlogin()}/test4py'
+  set_file = f'{base_dir}/set.txt'
+  log_file = f'{base_dir}/logs.txt'
+  sesh_file = f'{base_dir}/session.txt'
+
+  
+if __name__ == '__main__':
+  try:
+    prerun()
+    menu()
+  except Exception as e:
+    errorMSG = f'\nERROR: Unkown error encountered - {functions.getTime()}\n'
+    with open(files.log_file, 'a') as log:
+      log.write(errorMSG)
+      log.close()
+    print(errorMSG)
+    sys.exit(1)
+    
