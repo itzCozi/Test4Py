@@ -8,10 +8,9 @@ try:
   import time
   import string
   import random
-  from sys import platform
   from cryptography.fernet import Fernet
 except Exception as e:
-  print(f'ERROR: An error occurred when importing dependencies. \n{e}\n')
+  print(f'ERROR: [HELPER] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
   
 

@@ -1,6 +1,16 @@
 # THIS FILE IS RAN FIRST
 # Checks if all packages are working and ensure the programs directory exsists
-import os, sys
+try: # Import all used dependencies to sniff out missing modules (should be installed by setup)
+  import os, sys
+  import signal
+  import time
+  import string
+  import random
+  import tkinter as tk
+  from cryptography.fernet import Fernet
+except Exception as e:
+  print(f'ERROR: [CHECKS] An error occurred when importing dependencies. \n{e}\n')
+  sys.exit(1)
 
 
 class files:

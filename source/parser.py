@@ -2,6 +2,7 @@
 import os, sys
 import random
 import string
+from helper import crypto
 
 
 def searchList(INlist, target): 
@@ -24,6 +25,20 @@ class set:
   # ! - Symbolize incorrect answer
   # * - Correct answer choice
   # __ - Begin answer choice section
+
+  def encryptSet(set):
+    # Encrypts the question set and puts key at end
+    if not os.path.exists(set):
+      print(f'ERROR: Could not find {set}.')
+      sys.exit(1)
+      
+    key = crypto.encrypt(set)
+    
+    with open(set, 'a') as afile:
+     afile.write(f'\n{key}')
+     afile.close()
+    
+    return key
 
   def parseSet(file):
     # Makes the question set into a list
