@@ -28,9 +28,9 @@ class utility:
 
 def menu():
   # Declare widgets
-  header = tk.Label(window, height=5, text ='Test4Py', bg='#3E3E42', fg='#E4E6EB')
-  btn1 = tk.Button(window, text ='Join A Testing Session', command = join_session(), bg='#3E3E42', fg='#E4E6EB')
-  btn2 = tk.Button(window, text ='Start New Testing Session', command = new_session(), bg='#3E3E42', fg='#E4E6EB')
+  header = tk.Label(window, height=5, text ='Test4Py', bg='#2D2D30', fg='#E4E6EB')
+  btn1 = tk.Button(window, text ='Join A Testing Session', command = join_session(), bg='#2D2D30', fg='#E4E6EB')
+  btn2 = tk.Button(window, text ='Start New Testing Session', command = new_session(), bg='#2D2D30', fg='#E4E6EB')
   
   # Config widgets
   header.config(font=('monospace', 26))
@@ -46,8 +46,8 @@ def menu():
 
 def error_page():
   # Config widgets
-  header = tk.Label(window, height=5, text ='Whoops...', bg='#3E3E42', fg='#E4E6EB')
-  blurb = tk.Text(window, bg='#3E3E42', fg='#E4E6EB' )
+  header = tk.Label(window, height=5, text ='Whoops...', bg='#2D2D30', fg='#E4E6EB')
+  blurb = tk.Text(window, bg='#2D2D30', fg='#E4E6EB' )
   
   # Insertion/config widgets
   header.config(font=('monospace', 20))
