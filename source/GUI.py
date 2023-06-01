@@ -29,18 +29,22 @@ class utility:
 def menu():
   # Declare widgets
   header = tk.Label(window, height=5, text ='Test4Py', bg='#2D2D30', fg='#E4E6EB')
-  btn1 = tk.Button(window, text ='Join A Testing Session', command = join_session(), bg='#2D2D30', fg='#E4E6EB')
-  btn2 = tk.Button(window, text ='Start New Testing Session', command = new_session(), bg='#2D2D30', fg='#E4E6EB')
+  btn1 = tk.Button(window, text ='Join A Testing Session', command = join_session(), bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB')
+  btn2 = tk.Button(window, text ='Start New Testing Session', command = new_session(), bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB')
+  blank = tk.Label(window, width=45, bg='#2D2D30')
   
   # Config widgets
   header.config(font=('monospace', 26))
   btn1.config(font=('monospace', 16))
   btn2.config(font=('monospace', 16))
+  blank.config(font=('monospace', 26))
   
   # Pack widgets
   header.pack(anchor=tk.CENTER,fill=tk.X)
   btn1.pack(anchor=tk.CENTER,fill=tk.X)
   btn2.pack(anchor=tk.CENTER,fill=tk.X)
+  # Spawn a blank box below the buttons
+  blank.pack(anchor=tk.S, fill=tk.X)
   
   tk.mainloop()
 
@@ -66,4 +70,5 @@ def new_session():
 def join_session():
   pass
 
+#menu()
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)
