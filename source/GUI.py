@@ -29,11 +29,11 @@ class utility:
 def menu():
   URL = 'https://github.com/itzCozi/Test4Py/wiki' # Should open this link in browser (Windows)
   # Declare widgets
-  header = tk.Label(window, height=5, text='Test4Py', bg='#2D2D30', fg='#E4E6EB')
+  header = tk.Label(window, height=4, text='Test4Py', bg='#2D2D30', fg='#E4E6EB')
   btn1 = tk.Button(window, text='Join A Testing Session', command=join_session(), bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   btn2 = tk.Button(window, text='Start New Testing Session', command=new_session(), bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
-  btn3 = tk.Button(window, text='View Github/Wiki', command=os.system(f'start \"\" {URL}'), bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
-  blank = tk.Label(window, height=9, width=45, bg='#2D2D30')
+  btn3 = tk.Button(window, text='Exit Program', command=window.destroy, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
+  blank = tk.Label(window, height=20, width=45, bg='#2D2D30')
   
   # Config widgets
   header.config(font=('monospace', 26))
@@ -74,5 +74,4 @@ def new_session():
 def join_session():
   pass
 
-menu()
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)
