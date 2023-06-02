@@ -29,5 +29,6 @@ if __name__ == '__main__':
       log.write(errorMSG)
       log.close()
     print(errorMSG)
+    error_page()
     sys.exit(1)
     
