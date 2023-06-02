@@ -18,6 +18,7 @@ def searchList(INlist, target):
 
 
 class set:
+  # // - Exculdes the whole line
   # :: - Begin a new question
   # ;; - End current question
   # ?? - Writen before the question
@@ -92,7 +93,7 @@ class set:
         if ticker <= 26:  # Max 26 answer choices due to alphabet lenght
           letter = list(alphabet)[ticker]
         else:
-          ticker = 0  # Reset the count if ticker greater than 26
+          ticker = -1  # Reset the count if ticker greater than 26
         answer_choice = f'{letter}. {ans}'
         parsed_answers.append(answer_choice)
 
