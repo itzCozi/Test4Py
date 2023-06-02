@@ -55,10 +55,10 @@ class set:
           questions.append(questionOBJ)
 
     for item in questions:  # For every question in the list
-      ticker = -1             # Counts up to 26 for each letter
-      allAnswers = []         # All of the answers
-      parsed_answers = []     # The answers with a letter infront
-      embedded = None         # If the question has an embed
+      ticker = -1          # Counts up to 26 for each letter
+      allAnswers = []      # All of the answers
+      parsed_answers = []  # The answers with a letter infront
+      embedded = None      # If the question has an embed
       for line in item:  # For each newline in the choosen item
         # Index: Returns the index of the item in a given list
         # Find: Returns index of the word in a string/line
@@ -101,7 +101,7 @@ class set:
         parsed_question = f'{question} \
         \n{embedded_content} \
         \n{split_answers}'
-      
+
       else:  # If there is not an embed
         parsed_question = f'{question} \
         \n{split_answers}'

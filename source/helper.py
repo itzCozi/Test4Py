@@ -12,24 +12,31 @@ try:
 except Exception as e:
   print(f'ERROR: [HELPER] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
-  
+
+
+class files:
+  base_dir = f'C:/Users/{os.getlogin()}/test4py'
+  set_file = f'{base_dir}/set.txt'
+  log_file = f'{base_dir}/logs.txt'
+  sesh_file = f'{base_dir}/session.txt'
+
 
 class functions:
-  
+
   def genID():
     # Creates a unique ID
     lenght = 8
     buffer = random.randint(3, 6)
-    alphabet = list(string.ascii_letters+string.digits+string.digits)
+    alphabet = list(string.ascii_letters + string.digits + string.digits)
     ID = []
 
     for i in range(buffer):
       random.shuffle(alphabet)
-    
+
     for num in range(lenght):
       char = random.choice(alphabet)
       ID.append(char)
-    
+
     return ''.join(ID)
 
   def clear():
@@ -99,8 +106,8 @@ class functions:
           retlist.append(proc_info)
       return retlist
     except Exception:
-        print(f'ERROR: Cannot find process {process}.')
-        sys.exit(1)
+      print(f'ERROR: Cannot find process {process}.')
+      sys.exit(1)
 
   def removeRunning(process):
     # Kills a running process and then deletes it
@@ -164,7 +171,7 @@ class functions:
       except Exception as e:
         print(f'ERROR: Process {name} cannot be located.')
         sys.exit(1)
-        
+
   def getTime():
     out = os.popen('time /t').read()
     if 'PM' in out:
@@ -179,7 +186,7 @@ class functions:
     # MESSAGE: The desired message to display with the log.
     # FILE: A optional way to output logs to a file.
     time = functions.getTime()
-    
+
     if not os.path.exists(file):
       print(f'ERROR: Could not find {file}.')
       sys.exit(1)
@@ -191,7 +198,6 @@ class functions:
     except Exception as e:
       print(f'ERROR: Could not open {file}.')
       sys.exit(1)
-        
 
   def filterFile(file, word):
     # Search a file for given word and remove it
@@ -213,6 +219,63 @@ class functions:
       sys.exit(1)
 
 
+class sesh:
+
+  def startSession():
+    # Starts a new testing session
+    if os.path.getsize(files.sesh_file) != 0:
+      open(files.sesh_file, 'w')  # Clear the file
+
+    with open(files.sesh_file, 'a') as sesh:
+      sesh.write('question#: 1\n')
+      sesh.write('--ANSWERS--')
+      sesh.close()
+
+  def getAnswers():
+    # Returns all answers
+    if not os.path.exists(files.sesh_file):
+      print(f'ERROR: Session file cannot be found.')
+      sys.exit(1)
+
+    with open(files.sesh_file, 'r') as sesh:
+      retlist = []
+      content = sesh.read().splitlines()
+      for line in content:
+        if '--ANSWERS--' in line:
+          ans_start = content.index(line)
+          ans_section = content[ans_start + 1:]
+          for ans in ans_section:
+            if ans.isalpha():
+              retlist.append(ans)
+          return retlist
+
+  def addAnswer(ans):
+    # Adds a answer to the session file
+    if not os.path.exists(files.sesh_file):
+      print(f'ERROR: Session file cannot be found.')
+      sys.exit(1)
+
+    with open(files.sesh_file, 'a') as sesh:
+      sesh.write(f'\n{ans.upper()}')
+      sesh.close()
+
+  def updateQuestion():
+    # Update question number by 1
+    if not os.path.exists(files.sesh_file):
+      print(f'ERROR: Session file cannot be found.')
+      sys.exit(1)
+
+    with open(files.sesh_file, 'r+') as sesh:
+      content = sesh.read().splitlines()
+      num = int(content[0][11:]) + 1
+      content[0] = f'question#: {num}'
+      sesh.close()
+    with open(files.sesh_file, 'w') as out:
+      for item in content:
+        out.write(f'{item}\n')
+      out.close()
+
+
 class crypto:
 
   def encode(file):
@@ -223,9 +286,9 @@ class crypto:
 
     with open(file, 'rb') as Fin:
       original = Fin.read()
-      Fin.close()  
+      Fin.close()
     bytes = base64.b64encode(original)
-  
+
     with open(file, 'wb') as Fout:
       Fout.write(bytes)
       Fout.close()
@@ -239,16 +302,16 @@ class crypto:
 
     with open(file, 'rb') as Fin:
       original = Fin.read()
-      Fin.close()  
+      Fin.close()
     bytes = base64.b64decode(original)
-  
+
     with open(file, 'wb') as Fout:
       Fout.write(bytes)
       Fout.close()
     return bytes.decode('ascii')
 
 
-if __name__ == '__main__': # Sorry this looks ugly (looks like JS TBH)
+if __name__ == '__main__':  # Sorry this looks ugly (looks like JS TBH)
   file_name = os.path.basename(__file__).split('/')[-1]
   file_name = file_name[:file_name.find('.')]
   print(f"\n------------------------------------------------------ \
