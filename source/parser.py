@@ -42,10 +42,10 @@ class set:
     retlist = []
 
     for Qline in fcontent:
-      if '::' in Qline:
+      if '::' in Qline and '//' not in Qline:
         qStart = fcontent.index(Qline)
         fcontent.remove(Qline)
-      if ';;' in Qline:
+      if ';;' in Qline and '//' not in Qline:
         qEnd = fcontent.index(Qline)
         fcontent.remove(Qline)
 
@@ -53,8 +53,8 @@ class set:
         if questionOBJ not in questions:
           questions.append(questionOBJ)
 
-    for item in questions: # For every question in the list
-      ticker = -1             # Counts up to 24 for each letter
+    for item in questions:  # For every question in the list
+      ticker = -1             # Counts up to 26 for each letter
       incorrect_answers = []  # A list of incorrect answers
       correct_answers = []    # A list of correct answers
       allAnswers = []         # All of the answers
@@ -76,7 +76,9 @@ class set:
           embedded_path = line[embedStart:embedEnd] + ']'
 
       for Aline in item[aStart:]:  # For every line after the __ symbol
-        if '!' == Aline[0]:
+        if '//' in Aline or Aline == '':
+          pass  # Ignore comment lines/blank lines
+        elif '!' == Aline[0]:
           incorrect_answers.append(Aline.replace('!', ''))
           allAnswers.append(Aline.replace('!', ''))
         elif '*' == Aline[0]:
@@ -87,10 +89,10 @@ class set:
 
       for ans in allAnswers:  # Assign a uppercase letter to each choice A.
         ticker += 1
-        if ticker <= 24:  # Max 24 answer choices due to alphabet lenght
+        if ticker <= 26:  # Max 26 answer choices due to alphabet lenght
           letter = list(alphabet)[ticker]
         else:
-          ticker = 0  # Reset the count if ticker greater than 24
+          ticker = 0  # Reset the count if ticker greater than 26
         answer_choice = f'{letter}. {ans}'
         parsed_answers.append(answer_choice)
 
@@ -103,7 +105,7 @@ class set:
         parsed_question = f'{question} \
         \n{embedded_content} \
         \n{split_answers}'
-
+      
       else:  # If there is not an embed
         parsed_question = f'{question} \
         \n{split_answers}'
