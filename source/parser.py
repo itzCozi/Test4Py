@@ -56,8 +56,6 @@ class set:
 
     for item in questions:  # For every question in the list
       ticker = -1             # Counts up to 26 for each letter
-      incorrect_answers = []  # A list of incorrect answers
-      correct_answers = []    # A list of correct answers
       allAnswers = []         # All of the answers
       parsed_answers = []     # The answers with a letter infront
       embedded = None         # If the question has an embed
@@ -71,7 +69,6 @@ class set:
           aStart = item.index(line)
         if '[' and ']' in line:
           embedded = True
-
           embedStart = line.find('[')
           embedEnd = line.find(']')
           embedded_path = line[embedStart:embedEnd] + ']'
@@ -80,12 +77,10 @@ class set:
         if '//' in Aline or Aline == '':
           pass  # Ignore comment lines/blank lines
         elif '!' == Aline[0]:
-          incorrect_answers.append(Aline.replace('!', ''))
           allAnswers.append(Aline.replace('!', ''))
         elif '*' == Aline[0]:
           # We dont replace the asterisk because we need to idetify the correct
           # answer later on in GUI.py we will replace it before outputting answer choices
-          correct_answers.append(Aline.replace('*', ''))
           allAnswers.append(Aline)
 
       for ans in allAnswers:  # Assign a uppercase letter to each choice A.
@@ -116,7 +111,7 @@ class set:
 
   def jumbleSet(set):
     # Shuffles the question set
-    randnum = random.randint(2, 6)
+    randnum = random.randint(2, 4)
     for i in range(randnum):
       random.shuffle(set)
     return set
