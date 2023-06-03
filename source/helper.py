@@ -1,6 +1,7 @@
-# OS: Windows10
-# PY-VERSION: 3.11+
-# GITHUB: https://github.com/itzCozi/Helper
+# Acts as a library for functions and classes like sesh, crypto and functions
+#OS: Windows10
+#PY-VERSION: 3.11+
+#GITHUB: https://github.com/itzCozi/Helper
 
 try:
   import os, sys

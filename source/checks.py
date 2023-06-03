@@ -1,7 +1,7 @@
-# THIS FILE IS RAN FIRST
 # Checks if all packages are working and ensure the programs directory exsists
 try:
   import os, sys
+  from helper import functions as lib
 except Exception as e:
   print(f'ERROR: [CHECKS] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
@@ -22,7 +22,7 @@ def prerun():
     \n------------------------------------------------")
     input('Enter to exit...')
     sys.exit(1)
-  
+
   if not os.path.exists(files.base_dir):
     os.mkdir(files.base_dir)
   if not os.path.exists(files.set_file):
@@ -31,4 +31,5 @@ def prerun():
     open(files.log_file, 'w')
   if not os.path.exists(files.sesh_file):
     open(files.sesh_file, 'w')
-  
+  else:
+    print(f'Successfully passed [PRERUN] - {lib.getTime()}')
