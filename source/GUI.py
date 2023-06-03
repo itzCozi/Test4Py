@@ -95,16 +95,18 @@ def new_session():
     if os.path.exists(inp):
       hash = crypto.encodeFile(inp)
       hashed.config(text=hash, state='normal')
-    return inp
+    print(inp)
 
   # Declare widgets
   inputPROMPT = tk.Label(window, text="Enter the set's path", bg='#2D2D30', fg='#E4E6EB')
   inputTXT = tk.Text(window, height=2, width=6, bg='#2D2D30', fg='#E4E6EB')
   hashed = tk.Button(window, height=4, width=6, command=copyHash, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
+  homeBTN = tk.Button(window, height=1, width=2, text='Back', command=menu, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   button = tk.Button(window, height=1, width=2, text='Submit', command=getSet, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   blank = tk.Label(window, height=20, width=50, bg='#2D2D30')
 
   # Config widgets
+  homeBTN.config(font=('monospace', 14))
   button.config(font=('monospace', 14))
   inputTXT.config(font=('monospace', 16))
   hashed.config(font=('monospace', 16), state='disabled')
@@ -116,6 +118,7 @@ def new_session():
   inputTXT.pack(anchor=tk.CENTER, fill=tk.X)
   hashed.pack(anchor=tk.CENTER, fill=tk.X)
   button.pack(anchor=tk.CENTER, fill=tk.X)
+  homeBTN.pack(anchor=tk.S, fill=tk.X)
   blank.pack(anchor=tk.S, fill=tk.X)
 
   tk.mainloop()  # So now to join a session enter the copied string in join_session!
@@ -130,16 +133,18 @@ def join_session():
     inp = inputTXT.get(1.0, 'end-1c')
     decoded_set = crypto.decode(inp)
     set.writeSet(decoded_set.encode('utf-8'))
-    startBTN.config(text='Start', command=test_loop)
+    startBTN.config(text='Start', command=test_loop, height=2)
   
   # Declare widgets
   inputPROMPT = tk.Label(window, text="Enter the test code", bg='#2D2D30', fg='#E4E6EB')
   inputTXT = tk.Text(window, height=2, width=6, bg='#2D2D30', fg='#E4E6EB')
+  homeBTN = tk.Button(window, height=1, width=2, text='Back', command=menu, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   startBTN = tk.Button(window, height=1, width=2, text='Submit', command=getCode, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   blank = tk.Label(window, height=20, width=50, bg='#2D2D30')
 
   # Config widgets
   inputTXT.config(font=('monospace', 16))
+  homeBTN.config(font=('monospace', 14))
   startBTN.config(font=('monospace', 14))
   inputPROMPT.config(font=('monospace', 12), state='disabled')
   blank.config(font=('monospace', 26), state='disabled')
@@ -148,6 +153,7 @@ def join_session():
   inputPROMPT.pack(anchor=tk.W, fill=tk.X)
   inputTXT.pack(anchor=tk.CENTER, fill=tk.X)
   startBTN.pack(anchor=tk.CENTER, fill=tk.X)
+  homeBTN.pack(anchor=tk.S, fill=tk.X)
   blank.pack(anchor=tk.S, fill=tk.X)
   
   tk.mainloop()
@@ -161,6 +167,5 @@ def test_loop():
   """
   utility.resetAll()
   pass
-
 
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)

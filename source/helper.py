@@ -297,6 +297,7 @@ class crypto:
     with open(file, 'wb') as Fout:
       Fout.write(bytes)
       Fout.close()
+    return bytes.decode('ascii')
 
   def decode(msg):
     # Decodes the given message
@@ -317,6 +318,7 @@ class crypto:
     with open(file, 'wb') as Fout:
       Fout.write(bytes)
       Fout.close()
+    return bytes.decode('ascii')
 
 
 if __name__ == '__main__':  # Sorry this looks ugly (looks like JS TBH)
