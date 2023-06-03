@@ -19,7 +19,6 @@ window.resizable(width=False, height=False)
 class utility:
 
   def resetAll():
-    # Reset everything
     for widget in window.winfo_children():
       widget.destroy()
 

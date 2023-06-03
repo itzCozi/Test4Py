@@ -249,14 +249,20 @@ class sesh:
               retlist.append(ans)
           return retlist
 
-  def addAnswer(ans):
+  def addAnswer(ans, correct):
     # Adds a answer to the session file
+    if not isinstance(correct, bool):
+      print(f'ERROR: Parameter correct must be boolean.')
+      sys.exit(1)
     if not os.path.exists(files.sesh_file):
       print(f'ERROR: Session file cannot be found.')
       sys.exit(1)
 
     with open(files.sesh_file, 'a') as sesh:
-      sesh.write(f'\n{ans.upper()}')
+      if correct == True:
+        sesh.write(f'\n*{ans.upper()}')
+      else:
+        sesh.write(f'\n!{ans.upper()}')
       sesh.close()
 
   def updateQuestion():
