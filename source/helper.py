@@ -278,7 +278,12 @@ class sesh:
 
 class crypto:
 
-  def encode(file):
+  def encode(msg):
+    # Encode the given message
+    bytes = base64.b64encode(msg.encode('utf-8'))
+    return bytes.decode('ascii')
+
+  def encodeFile(file):
     # Encode the given file
     if not os.path.exists(file):
       print(f'ERROR: Could not find {file}.')
@@ -292,9 +297,13 @@ class crypto:
     with open(file, 'wb') as Fout:
       Fout.write(bytes)
       Fout.close()
+
+  def decode(msg):
+    # Decodes the given message
+    bytes = base64.b64decode(msg.encode('utf-8'))
     return bytes.decode('ascii')
 
-  def decode(file):
+  def decodeFile(file):
     # Decode the given file
     if not os.path.exists(file):
       print(f'ERROR: Could not find {file}.')
@@ -308,7 +317,6 @@ class crypto:
     with open(file, 'wb') as Fout:
       Fout.write(bytes)
       Fout.close()
-    return bytes.decode('ascii')
 
 
 if __name__ == '__main__':  # Sorry this looks ugly (looks like JS TBH)

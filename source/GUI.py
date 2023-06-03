@@ -3,8 +3,8 @@
 try:
   import os, sys
   import tkinter as tk
-  from parser import createSet     # Convert file to parsed set [createSet(file)]
-  from helper import crypto, sesh  # Decoding&Encoding the set [decode(file),encode(file)]
+  from parser import set, createSet  # Convert file to parsed set [createSet(file)]
+  from helper import crypto, sesh    # Decoding&Encoding the set [decode(file),encode(file)]
 except Exception as e:
   print(f'ERROR: [GUI] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
@@ -93,7 +93,7 @@ def new_session():
   def getSet():
     inp = inputTXT.get(1.0, 'end-1c')
     if os.path.exists(inp):
-      hash = crypto.encode(inp)
+      hash = crypto.encodeFile(inp)
       hashed.config(text=hash, state='normal')
     return inp
 
@@ -124,12 +124,38 @@ def new_session():
 def join_session():
   # Decodes given string to bytes and write to set file/Start test
   utility.resetAll()
-  pass
+  
+  def getCode():
+    # Gets the b64 code and writes to set.txt
+    inp = inputTXT.get(1.0, 'end-1c')
+    decoded_set = crypto.decode(inp)
+    set.writeSet(decoded_set.encode('utf-8'))
+    startBTN.config(text='Start', command=test_loop)
+  
+  # Declare widgets
+  inputPROMPT = tk.Label(window, text="Enter the test code", bg='#2D2D30', fg='#E4E6EB')
+  inputTXT = tk.Text(window, height=2, width=6, bg='#2D2D30', fg='#E4E6EB')
+  startBTN = tk.Button(window, height=1, width=2, text='Submit', command=getCode, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
+  blank = tk.Label(window, height=20, width=50, bg='#2D2D30')
 
-
-def test_loop(set):
-  # Takes in question set and parses the question, embeds and answer choices with each
-  # answer choice printed as a button for each item in the last item of the question list
+  # Config widgets
+  inputTXT.config(font=('monospace', 16))
+  startBTN.config(font=('monospace', 14))
+  inputPROMPT.config(font=('monospace', 12), state='disabled')
+  blank.config(font=('monospace', 26), state='disabled')
+  
+  # Pack widgets
+  inputPROMPT.pack(anchor=tk.W, fill=tk.X)
+  inputTXT.pack(anchor=tk.CENTER, fill=tk.X)
+  startBTN.pack(anchor=tk.CENTER, fill=tk.X)
+  blank.pack(anchor=tk.S, fill=tk.X)
+  
+  tk.mainloop()
+  
+  
+def test_loop():
+  # Parses the set.txt file with createSet command then outputs the prompt, embed(if any)
+  # and answer choices printed as a button for each item in the last item of the question list
   """ EXAMPLE QUESTION LIST
   [['Which choice accurately summarizes the text. ', 'THIS IS AN EMBEDDED \nFILE WITH TWO LINES ', ['A. The authour writes about their favorite food', 'B. *Our protagonist finds her husband in a mall', 'C. Liz invites a freind over for dinner', 'D. The narrator has a nice day in the park']]]
   """

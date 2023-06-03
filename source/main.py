@@ -24,10 +24,9 @@ if __name__ == '__main__':
     prerun()
     menu()
   except Exception as e:
-    errorMSG = f'\nERROR: Unkown error encountered - {functions.getTime()}\n'
+    errorMSG = f'\nERROR: Unkown error encountered - {functions.getTime()}\n{e}\n'
     with open(files.log_file, 'a') as log:
       log.write(errorMSG)
       log.close()
     print(errorMSG)
     error_page()
-    sys.exit(1)

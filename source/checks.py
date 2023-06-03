@@ -1,6 +1,6 @@
 # THIS FILE IS RAN FIRST
 # Checks if all packages are working and ensure the programs directory exsists
-try:  # Import all used dependencies to sniff out missing modules (should be installed by setup)
+try:
   import os, sys
 except Exception as e:
   print(f'ERROR: [CHECKS] An error occurred when importing dependencies. \n{e}\n')

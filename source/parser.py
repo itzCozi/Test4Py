@@ -5,16 +5,11 @@ import random
 import string
 
 
-def searchList(INlist, target):
-  # Searches a list for a character or sequence
-  if not isinstance(INlist, list):
-    print('ERROR: INlist must be a list type variable.')
-    sys.exit(1)
-
-  for item in INlist:
-    if target in item:
-      index = INlist.index(item)
-      return int(index)
+class files:
+  base_dir = f'C:/Users/{os.getlogin()}/test4py'
+  set_file = f'{base_dir}/set.txt'
+  log_file = f'{base_dir}/logs.txt'
+  sesh_file = f'{base_dir}/session.txt'
 
 
 class set:
@@ -109,6 +104,23 @@ class set:
       retlist.append(parsed_question.replace('  ', ''))
     return retlist
 
+  def searchList(INlist, target):
+    # Searches a list for a character or sequence
+    if not isinstance(INlist, list):
+      print('ERROR: INlist must be a list type variable.')
+      sys.exit(1)
+
+    for item in INlist:
+      if target in item:
+        index = INlist.index(item)
+        return int(index)
+
+  def writeSet(set):
+    # Writes given variable to file
+    with open(files.set_file, 'wb') as out:
+      out.write(set)
+      out.close()
+
   def jumbleSet(set):
     # Shuffles the question set
     randnum = random.randint(2, 4)
@@ -122,12 +134,11 @@ def createSet(file):
   package = []
   for question in set.parseSet(file):
     qlist = question.splitlines()
-    ans_index = int(searchList(qlist, 'A. '))
-
+    ans_index = int(set.searchList(qlist, 'A. '))
     prompt = qlist[0]
+    
     embedded = qlist[1:ans_index]
     answer_choices = qlist[ans_index:]
-
     embedded = '\n'.join(embedded)
 
     bundle = [prompt, embedded, answer_choices]
