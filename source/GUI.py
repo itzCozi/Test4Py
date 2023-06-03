@@ -87,7 +87,7 @@ def new_session():
       window.clipboard_clear()
       window.clipboard_append(btn_content)
       hashed.config(text='Test Code Copied To Clipboard', state='disabled')
-      button.config(text='Home', command=menu)
+      button.config(text='Join Session', command=join_session)
 
   def getSet():
     inp = inputTXT.get(1.0, 'end-1c')
