@@ -11,7 +11,7 @@ __
 // Anything not in a start or end section is ignored
 // The amount of answer choices varies depending on the 
 // amount of line between the __ symbol and ;; symbol
-// 
+
 // Each answer choice starts with a upper case letter
 // (A. <answer-choice>) and Test4Py can only do multiple
 // choice questions after 26 choices the next choices

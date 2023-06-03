@@ -91,10 +91,10 @@ def new_session():
 
   def getSet():
     inp = inputTXT.get(1.0, 'end-1c')
+    print(inp)
     if os.path.exists(inp):
       hash = crypto.encodeFile(inp)
       hashed.config(text=hash, state='normal')
-    print(inp)
 
   # Declare widgets
   inputPROMPT = tk.Label(window, text="Enter the set's path", bg='#2D2D30', fg='#E4E6EB')
@@ -130,6 +130,7 @@ def join_session():
   def getCode():
     # Gets the b64 code and writes to set.txt
     inp = inputTXT.get(1.0, 'end-1c')
+    print(inp)
     decoded_set = crypto.decode(inp)
     set.writeSet(decoded_set.encode('utf-8'))
     startBTN.config(text='Start', command=test_loop, height=2)
