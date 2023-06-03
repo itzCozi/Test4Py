@@ -228,7 +228,7 @@ class sesh:
       open(files.sesh_file, 'w')  # Clear the file
 
     with open(files.sesh_file, 'a') as sesh:
-      sesh.write('question#: 1\n')
+      sesh.write('question#: 0\n')
       sesh.write('--ANSWERS--')
       sesh.close()
 

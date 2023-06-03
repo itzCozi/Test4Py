@@ -158,13 +158,19 @@ def join_session():
   tk.mainloop()
   
   
-def test_loop():
+def test_loop():  # This is going to suck to code...
   # Parses the set.txt file with createSet command then outputs the prompt, embed(if any)
   # and answer choices printed as a button for each item in the last item of the question list
   """ EXAMPLE QUESTION LIST
   [['Which choice accurately summarizes the text. ', 'THIS IS AN EMBEDDED \nFILE WITH TWO LINES ', ['A. The authour writes about their favorite food', 'B. *Our protagonist finds her husband in a mall', 'C. Liz invites a freind over for dinner', 'D. The narrator has a nice day in the park']]]
   """
   utility.resetAll()
-  pass
+  sesh.startSession()  # Setup session file and shiii
+  qSet = createSet()
+  for question in qSet:
+    sesh.updateQuestion()  # Update sesh file's question log
+    prompt = question[0]          # The inital question (displayed first)
+    embed = question[1]           # Is equal to '' if no embed
+    answer_choices = question[2]  # A list of answers
 
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)

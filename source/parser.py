@@ -132,10 +132,12 @@ class set:
     return set
 
 
-def createSet(file):
+def createSet():
   # Creates complete question set and returns it (self-explanitory)
   package = []
-  for question in set.parseSet(file):
+  if os.path.getsize(files.set_file) == 0:
+    raise Exception('Set file is empty.')
+  for question in set.parseSet(files.set_file):
     qlist = question.splitlines()
     ans_index = int(set.searchList(qlist, 'A. '))
     prompt = qlist[0]
