@@ -164,13 +164,34 @@ def test_loop():  # This is going to suck to code...
   """ EXAMPLE QUESTION LIST
   [['Which choice accurately summarizes the text. ', 'THIS IS AN EMBEDDED \nFILE WITH TWO LINES ', ['A. The authour writes about their favorite food', 'B. *Our protagonist finds her husband in a mall', 'C. Liz invites a freind over for dinner', 'D. The narrator has a nice day in the park']]]
   """
-  utility.resetAll()
   sesh.startSession()  # Setup session file and shiii
   qSet = createSet()
   for question in qSet:
     sesh.updateQuestion()  # Update sesh file's question log
+    answers = []                  # List of choosen answers (LETTERS)
     prompt = question[0]          # The inital question (displayed first)
     embed = question[1]           # Is equal to '' if no embed
     answer_choices = question[2]  # A list of answers
+    
+    utility.resetAll()
+    question_prompt = tk.Label(window, text=prompt, bg='#2D2D30', fg='#E4E6EB')
+    if embed != '':  # I am pretty sure this will work
+      embed_section = tk.Text(window, bg='#2D2D30', fg='#E4E6EB')
+      embed_section.config(font=('monospace', 14), state='disabled')
+      embed_section.insert(tk.END,embed)
+      
+    question_prompt.config(font=('monospace', 14))
+    question_prompt.pack(anchor=tk.N, fill=tk.X)
+    if embed != '':
+      embed_section.pack(anchor=tk.CENTER, fill=tk.X)
+    
+    for answer_choice in answer_choices:
+      def setAnswer(ans1):
+        content = ans1.cget('text')
+        answers.append(content[0])
+        print(answers)
+      ans = tk.Button(window, height=1, width=5, text=answer_choice, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB') 
+      ans.config(font=('monospace', 14), command=setAnswer(ans))  # So for some fucking reason this works but calls to the function each time (prob cuz of the '()')
+      ans.pack(anchor=tk.CENTER, fill=tk.X)
 
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)

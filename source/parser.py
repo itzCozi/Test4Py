@@ -51,12 +51,10 @@ class set:
           questions.append(questionOBJ)
 
     for item in questions:  # For every question in the list
-      
       ticker = -1          # Counts up to 26 for each letter
       allAnswers = []      # All of the answers
       parsed_answers = []  # The answers with a letter infront
       embedded = None      # If the question has an embed
-      
       for line in item:  # For each newline in the choosen question
         # Index: Returns the index of the item in a given list
         # Find: Returns index of the word in a string/line
@@ -83,7 +81,7 @@ class set:
 
       for ans in allAnswers:  # Assign a uppercase letter to each choice A.
         ticker += 1
-        if ticker <= 26:  # Max 26 answer choices due to alphabet lenght
+        if ticker <= 26:  # Max 26 answer choices due to alphabet length
           letter = list(alphabet)[ticker]
         else:
           ticker = -1  # Reset the count if ticker greater than 26
@@ -141,7 +139,7 @@ def createSet():
     qlist = question.splitlines()
     ans_index = int(set.searchList(qlist, 'A. '))
     prompt = qlist[0]
-    
+
     embedded = qlist[1:ans_index]
     answer_choices = qlist[ans_index:]
     embedded = '\n'.join(embedded)
