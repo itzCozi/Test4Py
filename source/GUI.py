@@ -191,7 +191,7 @@ def test_loop():  # This is going to suck to code...
         answers.append(content[0])
         print(answers)
       ans = tk.Button(window, height=1, width=5, text=answer_choice, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB') 
-      ans.config(font=('monospace', 14), command=setAnswer(ans))  # So for some fucking reason this works but calls to the function each time (prob cuz of the '()')
+      ans.config(font=('monospace', 14), command=setAnswer(ans))  # So for some fucking reason this works but calls to the function each time (https://www.geeksforgeeks.org/how-to-check-which-button-was-clicked-in-tkinter/#)
       ans.pack(anchor=tk.CENTER, fill=tk.X)
 
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)
