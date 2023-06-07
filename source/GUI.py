@@ -172,19 +172,20 @@ def test_loop():  # This is going to suck to code...
   # and answer choices printed as a button for each item in the last item of the question list
   window.resizable(width=True, height=True)
   
-  def setAnswer(ans1):
-    # Make this append to the sessions answers section and changes the background
-    # of clicked buttons also add a unclick feature by checking clicked buttons
-    content = ans1.cget('text')
-    answers.append(content[0])
-    print(answers)
-  
   utility.resetAll()
   sesh.startSession()
   qSet = createSet()
   frame = ScrollableFrame(window)
   
   for question in qSet:
+    def setAnswer(ans1):
+      # Make this append to the sessions answers section and 
+      # add a unclick feature by checking clicked buttons
+      content = ans1.cget('text')
+      answers.append(content[0])
+      ans1.config(bg='#4ABA68')
+      print(answers)
+    
     sesh.updateQuestion()  # Update sesh file's question log
     answers = []                  # List of choosen answers (LETTERS)
     prompt = question[0]          # The inital question (displayed first)

@@ -261,9 +261,9 @@ class sesh:
 
     with open(files.sesh_file, 'a') as sesh:
       if correct == True:
-        sesh.write(f'\n*{ans.upper()}')
+        sesh.write(f'\n*{sesh.getQuestionNum()}:{ans.upper()}')
       else:
-        sesh.write(f'\n!{ans.upper()}')
+        sesh.write(f'\n!{sesh.getQuestionNum()}:{ans.upper()}')
       sesh.close()
 
   def updateQuestion():
@@ -281,6 +281,18 @@ class sesh:
       for item in content:
         out.write(f'{item}\n')
       out.close()
+      
+  def getQuestionNum():
+    # Update question number by 1
+    if not os.path.exists(files.sesh_file):
+      print(f'ERROR: Session file cannot be found.')
+      sys.exit(1)
+
+    with open(files.sesh_file, 'r+') as sesh:
+      content = sesh.read().splitlines()
+      num = int(content[0][11:])
+      sesh.close()
+    return num
 
 
 class crypto:
