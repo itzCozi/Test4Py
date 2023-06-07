@@ -8,9 +8,10 @@ except Exception as e:
   print(f'ERROR: [GUI] An error occurred when importing dependencies. \n{e}\n')
   sys.exit(1)
 
-window = tk.Tk()
+window = tk.Tk(className='Test4Py')
 window.title('Test4Py')
 window.geometry('850x650')
+window.configure(bg='#2D2D30')
 window.resizable(width=False, height=False)
 # Disables window resizing (re-enable during test_loop)
 
@@ -29,6 +30,24 @@ class utility:
     newWindow.title(title)
     newWindow.geometry(f'{x}x{y}')
 
+class ScrollableFrame(tk.Frame):  # Must make the window spanwed here BIGGER
+  # To make the test_loop scrollable for ease of use thanks to this guy
+  # https://blog.teclado.com/tkinter-scrollable-frames/
+
+  def __init__(self, container, *args, **kwargs):
+    super().__init__(container, *args, **kwargs)
+    canvas = tk.Canvas(self)
+    scrollbar = tk.Scrollbar(self, orient=tk.VERTICAL, command=canvas.yview)
+    self.scrollable_frame = tk.Frame(canvas)
+
+    self.scrollable_frame.bind(
+      '<Configure>',
+      lambda e: canvas.configure(scrollregion=canvas.bbox('all')))
+
+    canvas.create_window((0, 0), window=self.scrollable_frame, anchor=tk.CENTER)
+    canvas.configure(yscrollcommand=scrollbar.set)
+    canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 def menu():
   utility.resetAll()
@@ -37,22 +56,18 @@ def menu():
   btn1 = tk.Button(window, height=1, width=5, text='Join A Testing Session', command=join_session, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   btn2 = tk.Button(window, height=1, width=5, text='Start New Testing Session', command=new_session, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   btn3 = tk.Button(window, height=1, width=5, text='Exit Program', command=window.destroy, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
-  blank = tk.Label(window, height=20, width=5, bg='#2D2D30')
 
   # Config widgets
   header.config(font=('monospace', 26))
   btn1.config(font=('monospace', 16))
   btn2.config(font=('monospace', 16))
   btn3.config(font=('monospace', 16))
-  blank.config(font=('monospace', 26))
 
   # Pack widgets
   header.pack(anchor=tk.CENTER, fill=tk.X)
   btn1.pack(anchor=tk.CENTER, fill=tk.X)
   btn2.pack(anchor=tk.CENTER, fill=tk.X)
   btn3.pack(anchor=tk.CENTER, fill=tk.X)
-  # Spawn a blank box below the buttons
-  blank.pack(anchor=tk.S, fill=tk.X)
 
   tk.mainloop()
 
@@ -101,7 +116,6 @@ def new_session():
   hashed = tk.Button(window, height=4, width=6, command=copyHash, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   homeBTN = tk.Button(window, height=1, width=2, text='Back', command=menu, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   button = tk.Button(window, height=1, width=2, text='Submit', command=getSet, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
-  blank = tk.Label(window, height=20, width=50, bg='#2D2D30')
 
   # Config widgets
   homeBTN.config(font=('monospace', 14))
@@ -109,7 +123,6 @@ def new_session():
   inputTXT.config(font=('monospace', 16))
   hashed.config(font=('monospace', 16), state='disabled')
   inputPROMPT.config(font=('monospace', 12), state='disabled')
-  blank.config(font=('monospace', 26), state='disabled')
 
   # Pack widgets
   inputPROMPT.pack(anchor=tk.W, fill=tk.X)
@@ -117,7 +130,6 @@ def new_session():
   hashed.pack(anchor=tk.CENTER, fill=tk.X)
   button.pack(anchor=tk.CENTER, fill=tk.X)
   homeBTN.pack(anchor=tk.S, fill=tk.X)
-  blank.pack(anchor=tk.S, fill=tk.X)
 
   tk.mainloop()  # So now to join a session enter the copied string in join_session!
 
@@ -135,25 +147,22 @@ def join_session():
     startBTN.config(text='Start', command=test_loop, height=2)
   
   # Declare widgets
-  inputPROMPT = tk.Label(window, text="Enter the test code", bg='#2D2D30', fg='#E4E6EB')
+  inputPROMPT = tk.Label(window, text='Enter the test code', bg='#2D2D30', fg='#E4E6EB')
   inputTXT = tk.Text(window, height=2, width=6, bg='#2D2D30', fg='#E4E6EB')
   homeBTN = tk.Button(window, height=1, width=2, text='Back', command=menu, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
   startBTN = tk.Button(window, height=1, width=2, text='Submit', command=getCode, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
-  blank = tk.Label(window, height=20, width=50, bg='#2D2D30')
 
   # Config widgets
   inputTXT.config(font=('monospace', 16))
   homeBTN.config(font=('monospace', 14))
   startBTN.config(font=('monospace', 14))
   inputPROMPT.config(font=('monospace', 12), state='disabled')
-  blank.config(font=('monospace', 26), state='disabled')
   
   # Pack widgets
   inputPROMPT.pack(anchor=tk.W, fill=tk.X)
   inputTXT.pack(anchor=tk.CENTER, fill=tk.X)
   startBTN.pack(anchor=tk.CENTER, fill=tk.X)
   homeBTN.pack(anchor=tk.S, fill=tk.X)
-  blank.pack(anchor=tk.S, fill=tk.X)
   
   tk.mainloop()
   
@@ -161,11 +170,20 @@ def join_session():
 def test_loop():  # This is going to suck to code...
   # Parses the set.txt file with createSet command then outputs the prompt, embed(if any)
   # and answer choices printed as a button for each item in the last item of the question list
-  """ EXAMPLE QUESTION LIST
-  [['Which choice accurately summarizes the text. ', 'THIS IS AN EMBEDDED \nFILE WITH TWO LINES ', ['A. The authour writes about their favorite food', 'B. *Our protagonist finds her husband in a mall', 'C. Liz invites a freind over for dinner', 'D. The narrator has a nice day in the park']]]
-  """
-  sesh.startSession()  # Setup session file and shiii
+  window.resizable(width=True, height=True)
+  
+  def setAnswer(ans1):
+    # Make this append to the sessions answers section and changes the background
+    # of clicked buttons also add a unclick feature by checking clicked buttons
+    content = ans1.cget('text')
+    answers.append(content[0])
+    print(answers)
+  
+  utility.resetAll()
+  sesh.startSession()
   qSet = createSet()
+  frame = ScrollableFrame(window)
+  
   for question in qSet:
     sesh.updateQuestion()  # Update sesh file's question log
     answers = []                  # List of choosen answers (LETTERS)
@@ -173,12 +191,11 @@ def test_loop():  # This is going to suck to code...
     embed = question[1]           # Is equal to '' if no embed
     answer_choices = question[2]  # A list of answers
     
-    utility.resetAll()
-    question_prompt = tk.Label(window, text=prompt, bg='#2D2D30', fg='#E4E6EB')
+    question_prompt = tk.Label(frame.scrollable_frame, text=prompt, bg='#2D2D30', fg='#E4E6EB')
     if embed != '':  # I am pretty sure this will work
-      embed_section = tk.Text(window, bg='#2D2D30', fg='#E4E6EB')
-      embed_section.config(font=('monospace', 14), state='disabled')
+      embed_section = tk.Text(frame.scrollable_frame, bg='#2D2D30', fg='#E4E6EB')
       embed_section.insert(tk.END,embed)
+      embed_section.config(font=('monospace', 14), state='disabled')
       
     question_prompt.config(font=('monospace', 14))
     question_prompt.pack(anchor=tk.N, fill=tk.X)
@@ -186,12 +203,14 @@ def test_loop():  # This is going to suck to code...
       embed_section.pack(anchor=tk.CENTER, fill=tk.X)
     
     for answer_choice in answer_choices:
-      def setAnswer(ans1):
-        content = ans1.cget('text')
-        answers.append(content[0])
-        print(answers)
-      ans = tk.Button(window, height=1, width=5, text=answer_choice, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB') 
-      ans.config(font=('monospace', 14), command=setAnswer(ans))  # So for some fucking reason this works but calls to the function each time (https://www.geeksforgeeks.org/how-to-check-which-button-was-clicked-in-tkinter/#)
+      ans = tk.Button(frame.scrollable_frame, height=1, width=5, text=answer_choice, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB') 
+      ans.config(font=('monospace', 14), command=lambda m=ans: setAnswer(m))  # Lost 3hrs of my life here thanks (https://www.geeksforgeeks.org/how-to-check-which-button-was-clicked-in-tkinter/#)
       ans.pack(anchor=tk.CENTER, fill=tk.X)
+    
+    exitBTN = tk.Button(frame.scrollable_frame, height=1, width=4, text='EXIT', bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
+    exitBTN.config(font=('monospace', 14), command=menu)
+  
+  frame.pack()
+
 
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)
