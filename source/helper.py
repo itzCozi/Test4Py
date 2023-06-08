@@ -281,7 +281,7 @@ class sesh:
       for item in content:
         out.write(f'{item}\n')
       out.close()
-      
+
   def getQuestionNum():
     # Update question number by 1
     if not os.path.exists(files.sesh_file):

@@ -13,7 +13,7 @@ window.title('Test4Py')
 window.geometry('850x650')
 window.configure(bg='#2D2D30')
 window.resizable(width=False, height=False)
-# Disables window resizing (re-enable during test_loop)
+# Disables window resizing (re-enabled during test_loop)
 
 
 class utility:
@@ -37,13 +37,14 @@ class ScrollableFrame(tk.Frame):  # Must make the window spanwed here BIGGER
 
   def __init__(self, container, *args, **kwargs):
     super().__init__(container, *args, **kwargs)
-    canvas = tk.Canvas(self, bg='#2D2D30')
+    canvas = tk.Canvas(self, bg='#2D2D30', bd=-2)
     scrollbar = tk.Scrollbar(self, orient=tk.VERTICAL, command=canvas.yview)
     self.scrollable_frame = tk.Frame(canvas, bg='#2D2D30')
 
     self.scrollable_frame.bind(
       '<Configure>',
-      lambda e: canvas.configure(scrollregion=canvas.bbox('all')))
+      lambda e: canvas.configure(scrollregion=canvas.bbox('all'))
+    )
 
     canvas.create_window((0, 0), window=self.scrollable_frame, anchor=tk.CENTER)
     canvas.configure(yscrollcommand=scrollbar.set)
@@ -172,27 +173,31 @@ def join_session():
 def test_loop():  # This is going to suck to code...
   # Parses the set.txt file with createSet command then outputs the prompt, embed(if any)
   # and answer choices printed as a button for each item in the last item of the question list
-  window.resizable(width=True, height=True)
+  window.geometry('900x850'), window.resizable(width=True, height=True)
 
+  def setAnswer(ans1):
+    # Make this append to the sessions answers section and
+    # add a unclick feature by checking already clicked buttons
+    content = ans1.cget('text')
+    if '   ' in content:
+      itemOBJ = f'*{content[0]}'
+    else:
+      itemOBJ = f'{content[0]}'
+    answers.append(itemOBJ)
+    ans1.config(bg='#4ABA68')
+    print(answers)
+    
   utility.resetAll()
   sesh.startSession()
   qSet = createSet()
   frame = ScrollableFrame(window)
+  answers = []
 
   for question in qSet:
     sesh.updateQuestion()  # Update sesh file's question log
-    answers = []                  # List of choosen answers (LETTERS)
     prompt = question[0]          # The inital question (displayed first)
     embed = question[1]           # Is equal to '' if no embed
     answer_choices = question[2]  # A list of answers
-
-    def setAnswer(ans1):
-      # Make this append to the sessions answers section and
-      # add a unclick feature by checking clicked buttons
-      content = ans1.cget('text')
-      answers.append(content[0])
-      ans1.config(bg='#4ABA68')
-      print(answers)
 
     question_prompt = tk.Label(frame.scrollable_frame, text=prompt, bg='#2D2D30', fg='#E4E6EB')
     if embed != '':  # I am pretty sure this will work
@@ -206,6 +211,8 @@ def test_loop():  # This is going to suck to code...
       embed_section.pack(anchor=tk.CENTER, fill=tk.X)
 
     for answer_choice in answer_choices:
+      if '*' in answer_choice:
+        answer_choice = answer_choice.replace('*', '') + '   '  # I know its lazy, but it works...
       ans = tk.Button(frame.scrollable_frame, height=1, width=5, text=answer_choice, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
       ans.config(font=('monospace', 14), command=lambda m=ans: setAnswer(m))  # Lost 3hrs of my life here, thanks... (https://www.geeksforgeeks.org/how-to-check-which-button-was-clicked-in-tkinter/#)
       ans.pack(anchor=tk.CENTER, fill=tk.X)
@@ -213,7 +220,7 @@ def test_loop():  # This is going to suck to code...
     exitBTN = tk.Button(frame.scrollable_frame, height=1, width=4, text='EXIT', bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
     exitBTN.config(font=('monospace', 14), command=menu)
 
-  frame.pack(fill=tk.BOTH)
+  frame.pack(expand=True, fill=tk.BOTH)
 
 
 # REFERENCE: https://github.com/itzCozi/0swald-AI, THEME: Dark(3E3E42/2D2D30/E4E6EB)
