@@ -31,7 +31,7 @@ class utility:
     newWindow.geometry(f'{x}x{y}')
 
 
-class ScrollableFrame(tk.Frame):  # Must make the window spanwed here BIGGER
+class ScrollableFrame(tk.Frame):
   # To make the test_loop scrollable for ease of use thanks to this guy
   # https://blog.teclado.com/tkinter-scrollable-frames/
 
@@ -53,7 +53,7 @@ class ScrollableFrame(tk.Frame):  # Must make the window spanwed here BIGGER
 
 
 def menu():
-  utility.resetAll()
+  utility.resetAll(), window.geometry('850x650'), window.resizable(width=False, height=False)
   # Declare widgets
   header = tk.Label(window, height=4, width=5, text='Test4Py', bg='#2D2D30', fg='#E4E6EB')
   btn1 = tk.Button(window, height=1, width=5, text='Join A Testing Session', command=join_session, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
@@ -176,31 +176,38 @@ def test_loop():  # This is going to suck to code...
   window.geometry('900x850'), window.resizable(width=True, height=True)
 
   def setAnswer(ans1):
-    # Make this append to the sessions answers section and
-    # add a unclick feature by checking already clicked buttons
+    # Make this append to the session's file answers section
     content = ans1.cget('text')
     if '   ' in content:
       itemOBJ = f'*{content[0]}'
     else:
       itemOBJ = f'{content[0]}'
-    answers.append(itemOBJ)
-    ans1.config(bg='#4ABA68')
-    print(answers)
+    if content in raw_answers:  # Have to create a removeAnswer() func in helper.sesh
+      answers.remove(itemOBJ)
+      raw_answers.remove(content)
+      ans1.config(bg='#2D2D30')
+      print(answers)
+    else:
+      raw_answers.append(content)
+      answers.append(itemOBJ)
+      ans1.config(bg='#4ABA68')
+      print(answers)
     
   utility.resetAll()
   sesh.startSession()
   qSet = createSet()
   frame = ScrollableFrame(window)
+  raw_answers = []
   answers = []
 
-  for question in qSet:
+  for question in qSet:  # JUST RELIZED THIS WONT WORK (check fuckme.txt)
     sesh.updateQuestion()  # Update sesh file's question log
     prompt = question[0]          # The inital question (displayed first)
     embed = question[1]           # Is equal to '' if no embed
     answer_choices = question[2]  # A list of answers
 
     question_prompt = tk.Label(frame.scrollable_frame, text=prompt, bg='#2D2D30', fg='#E4E6EB')
-    if embed != '':  # I am pretty sure this will work
+    if embed != '':  # I am pretty sure this will work (it does)
       embed_section = tk.Text(frame.scrollable_frame, bg='#2D2D30', fg='#E4E6EB')
       embed_section.insert(tk.END, embed)
       embed_section.config(font=('monospace', 14), state='disabled')
@@ -216,10 +223,14 @@ def test_loop():  # This is going to suck to code...
       ans = tk.Button(frame.scrollable_frame, height=1, width=5, text=answer_choice, bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
       ans.config(font=('monospace', 14), command=lambda m=ans: setAnswer(m))  # Lost 3hrs of my life here, thanks... (https://www.geeksforgeeks.org/how-to-check-which-button-was-clicked-in-tkinter/#)
       ans.pack(anchor=tk.CENTER, fill=tk.X)
- 
-    exitBTN = tk.Button(frame.scrollable_frame, height=1, width=4, text='EXIT', bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
+    
+    exitBTN = tk.Button(frame.scrollable_frame, height=1, width=4, text='Exit', bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
+    submitBTN = tk.Button(frame.scrollable_frame, height=1, width=6, text='Submit', bg='#2D2D30', activebackground='#3E3E42', fg='#E4E6EB', activeforeground='#E4E6EB')
     exitBTN.config(font=('monospace', 14), command=menu)
+    submitBTN.config(font=('monospace', 14), command=menu)  # NEED TO CREATE SUBMIT FUNCTION LATER!
 
+  exitBTN.pack(side=tk.LEFT)
+  submitBTN.pack(side=tk.RIGHT)
   frame.pack(expand=True, fill=tk.BOTH)
 
 

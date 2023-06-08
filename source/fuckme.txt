@@ -1,0 +1,7 @@
+So basicly i am fucked this was nice and all i love a poorly coded side project but i cant get the current
+question's number like question 1, 2, or 3 because all questions are rendered in a for loop meaning it does
+not wait for the users input to move on and if it did well it would need a loop (window.main_loop) but to
+move to the next question i would need to continue which tk hates when i bind that to a button so i am kinda
+fucked without the question's number it will be impossible to differentiate answers in the session file
+i can still attempt to recode all of the test_loop function but this would be hard because of the continue
+issue and if i did do it this way i would still need to recode the session or sesh system in helper
